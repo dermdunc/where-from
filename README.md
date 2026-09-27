@@ -73,6 +73,7 @@ Mechanics worth knowing:
 - An ADR receipt is the sha256 of the file. A catalogue receipt is the sha256 of that one record's canonical JSON (sorted keys), so reformatting the catalogue without changing a value stays `fresh`.
 - A cited file that becomes a symlink pointing outside the sources reads `stale`, and a record file that does the same is refused at build and reads `stale` after it.
 - The snapshot is trusted input. Receipts prove the sources haven't changed since *your* build; they don't prove a snapshot someone hands you was built honestly, so don't accept one from anyone you wouldn't let edit your sources. The snapshot also names which files are read and hashed, so a hostile one can make the tool read any file you can read and confirm its contents.
+- Control characters in source values (an ANSI escape planted in a catalogue, say) are printed as visible escapes like `\x1b`, not passed to your terminal.
 - Run the commands from the directory you built in.
 - Exit codes: `0` ok; `1` `check` found stale or missing receipts, or records the snapshot doesn't cover (unverifiable ones are reported but don't fail it); `2` no snapshot, or a source that won't read; `3` nothing in the snapshot knows the subject; `4` a field no source records.
 

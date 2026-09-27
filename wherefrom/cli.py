@@ -16,6 +16,21 @@ from wherefrom.sources import SOURCES, SourceError
 
 SNAPSHOT = Path(".wherefrom/facts.jsonl")  # relative to where you run it
 
+# Source values reach the terminal. Show control characters (e.g. ANSI escapes planted in a
+# catalogue) as visible escapes instead of letting the terminal act on them.
+_CONTROL = {c: f"\\x{c:02x}" for c in [*range(32), *range(127, 160)] if c not in (9, 10)}
+
+
+class _Visible:
+    def __init__(self, stream):
+        self._stream = stream
+
+    def write(self, text):
+        return self._stream.write(text.translate(_CONTROL))
+
+    def __getattr__(self, name):
+        return getattr(self._stream, name)
+
 
 def load():
     if not SNAPSHOT.exists():
@@ -127,4 +142,5 @@ def main(argv=None):
     c = sub.add_parser("check", help="re-verify every receipt")
     c.set_defaults(fn=cmd_check)
     args = p.parse_args(argv)
+    sys.stdout, sys.stderr = _Visible(sys.stdout), _Visible(sys.stderr)
     return args.fn(args)

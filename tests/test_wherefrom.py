@@ -238,6 +238,15 @@ class ExhibitTest(unittest.TestCase):
         self.assertEqual(r.returncode, 2)
         self.assertIn("resolves outside the sources root", r.stderr)
 
+    def test_control_characters_in_sources_are_shown_not_executed(self):
+        cat = json.loads((self.src / "catalog.json").read_text())
+        cat["services"][1]["owner"] = "evil\x1b[2Jteam"  # an ANSI clear-screen in a value
+        (self.src / "catalog.json").write_text(json.dumps(cat, indent=2))
+        self.assertEqual(run("build", "--sources", str(self.src), cwd=self.tmp).returncode, 0)
+        out = run("about", "search", cwd=self.tmp).stdout
+        self.assertNotIn("\x1b", out)
+        self.assertIn("evil\\x1b[2Jteam", out)
+
     def test_explain_shows_the_chain(self):
         _, ans = self.about("checkout")
         fid = [f for f in ans["facts"] if "ADR-0001" in f["value"]][0]["id"]
