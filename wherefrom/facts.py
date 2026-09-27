@@ -38,10 +38,12 @@ def write_snapshot(path: Path, sources_root: Path, facts: list, records: dict) -
     """records: {source: {record path: sha256}}, kept so records that are new,
     or changed without producing a fact, can be reported."""
     path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("w") as out:
+    tmp = path.with_suffix(".tmp")  # write aside, then swap, so a crash can't truncate the old snapshot
+    with tmp.open("w") as out:
         out.write(json.dumps({"sources_root": str(sources_root), "records": records}) + "\n")
         for f in facts:
             out.write(json.dumps(asdict(f)) + "\n")
+    tmp.replace(path)
 
 
 def read_snapshot(path: Path):

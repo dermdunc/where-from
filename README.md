@@ -2,14 +2,14 @@
 
 A small, runnable exhibit. It joins records from two sources that don't know about each other, keeps a receipt for every fact, and tells you when a receipt has gone stale. No model, no database, no service, no dependencies beyond Python 3.11 or newer.
 
-It is a clean-room rebuild, on invented data, of the one pattern that survived a larger private experiment. The plan there was a federated knowledge layer plus a context compiler for small local models. The evidence cut it down to this. The write-up tells the whole story; [`docs/`](docs/) has the short version, including what didn't work.
+It is a clean-room rebuild, on invented data, of the one pattern that held up, narrowly, in a larger private experiment. The plan there was a federated knowledge layer plus a context compiler for small local models. The evidence cut it down to this. A companion write-up tells the whole story (linked here once published); [`docs/`](docs/) has the short version, including what didn't work.
 
-**This is an exhibit, not a maintained tool.** In the lab it came from, the pattern clearly helped with one of three real cross-source investigations and partly helped with another. I'd set a bar of 8 genuine uses in 30 days before treating it as a real tool; as of 27 September 2026 it had 4, all from one working session. Read it, run it, borrow the idea. Don't adopt it as infrastructure.
+**This is an exhibit, not a maintained tool.** In the lab it came from, the pattern clearly helped with one of three real cross-source investigations and partly helped with another. I'd set a bar of 8 genuine uses in 30 days before treating it as a real tool; as of 27 September 2026 it had 4 against that bar of 8, all from one working session. Read it, run it, borrow the idea. Don't adopt it as infrastructure.
 
 | | |
 |---|---|
 | **What survived** | Joining structured records across sources with full provenance, re-checking every receipt against the current sources, and saying "unresolved" or "unsupported" instead of guessing. |
-| **What didn't** | In the same lab: machine-built repo maps as context for small models (below the bar at 7B; a 24B pass didn't hold on new tasks), and an oracle for routing each task to its best context procedure (INCONCLUSIVE, so the classifier was never built). The graph database and full-text projection were never needed. See [what-didnt.md](docs/what-didnt.md). |
+| **What didn't** | In the same lab: machine-built context packets for small local models, and a task-routing classifier (never built, because even its best case was inconclusive). The graph database and full-text projection were never needed. See [what-didnt.md](docs/what-didnt.md). |
 | **What you can run** | The commands below, a drift demo, and the tests. About ten minutes. |
 
 ## Run it
@@ -40,7 +40,7 @@ checkout
   decision   ADR-0003 Send order emails through the notify service (proposed)  [fresh]        adr/0003-email-via-notify.md  f-fe77c2466b
 ```
 
-Four facts came from a service catalogue, two from architecture decision records. Neither source knows the other exists. The join happens on the service name, and every line says where it came from. (Both sources sit in one folder here for convenience. In practice they'd live in different repos with different owners.)
+Four facts came from a service catalogue, two from architecture decision records. Neither source knows the other exists. The join happens on the service name, and every line says where it came from. (Both sources sit in one folder here for convenience; the tool reads a single `--sources` root. Joining sources that live in different repos would mean adapting the readers, which this exhibit doesn't do.)
 
 ## What it does
 
@@ -51,7 +51,7 @@ Four facts came from a service catalogue, two from architecture decision records
 - `fresh`: the record's content and everything it cites are unchanged since build
 - `stale`: the record, or something it cites, has changed (or the source no longer reads cleanly)
 - `missing`: the record, or something it cites, is gone
-- `unverifiable`: it cites something that can't be hashed (a URL, or a path outside the sources), so it says so
+- `unverifiable`: at build time it cited something that can't be hashed (a URL, or a path outside the sources), so it says so
 
 Receipts are per record, not per field. When the `search` entry in the catalogue changes owner, all of search's catalogue facts go stale, including the tier that didn't change. The `checkout` entry's facts stay fresh.
 
@@ -69,7 +69,8 @@ The snapshot is disposable. Delete `.wherefrom/` and rebuild; the answers are th
 Mechanics worth knowing:
 
 - An ADR receipt is the sha256 of the file. A catalogue receipt is the sha256 of that one record's canonical JSON (sorted keys), so reformatting the catalogue without changing a value stays `fresh`.
-- A cited file that becomes a symlink pointing outside the sources reads `unverifiable`.
+- A cited file that becomes a symlink pointing outside the sources reads `stale`, and a record file that does the same is refused at build and reads `stale` after it.
+- The snapshot is trusted input. Receipts prove the sources haven't changed since *your* build; they don't prove a snapshot someone hands you was built honestly, so don't accept one from anyone you wouldn't let edit your sources.
 - Run the commands from the directory you built in.
 - Exit codes: `0` ok; `1` `check` found stale or missing receipts, or records the snapshot doesn't cover (unverifiable ones are reported but don't fail it); `2` no snapshot, or a source that won't read; `3` nothing in the snapshot knows the subject; `4` a field no source records.
 
@@ -78,10 +79,10 @@ Mechanics worth knowing:
 The private lab asked two separate questions under the same rule: measure the cheap option before building the expensive one.
 
 1. **Can records from separate sources be joined with provenance and honest staleness, without a model?** In a small sample, yes: one real cross-source question answered correctly, drift detected in the two scenarios tested (an edit, a deletion), and a narrow usefulness verdict. That pattern is what this repo rebuilds.
-2. **Does machine-prepared context let a small local model do more useful work?** Hand-curated context helped in all four cycles where it was tested. The machine-built versions didn't earn promotion. A final test gave an oracle the best of three context procedures for each task, after the fact: +0.10 over always using a plain file listing (below the +0.15 bar) and +0.16 over always using a procedural template (inside the inconclusive band set before the run). The science said INCONCLUSIVE. The engineering decision was to stop, so no classifier was built.
+2. **Does machine-prepared context let a small local model do more useful work?** Hand-curated context helped in all four cycles where it was tested (though on one benchmark tier a plain file listing edged it). The machine-built versions didn't earn promotion. A final test gave an oracle the best of three context procedures for each task, after the fact: +0.10 over always using a plain file listing (below the +0.15 bar) and +0.16 over always using a procedural template (inside the inconclusive band set before the run). The science said INCONCLUSIVE. The engineering decision was to stop, so no classifier was built.
 
 The numbers come from the author's private repositories and can't be re-run from here. This repo reproduces the federation *behaviour*, not the experiments. Details: [experiment-lineage.md](docs/experiment-lineage.md), [what-didnt.md](docs/what-didnt.md), [methodology.md](docs/methodology.md).
 
 ## Licence
 
-MIT. See [LICENSE](LICENSE).
+MIT, see [LICENSE](LICENSE), except `CODE_OF_CONDUCT.md` (CC BY 4.0, adapted from the Contributor Covenant). Found a receipt that says `fresh` when it shouldn't? See [CONTRIBUTING.md](CONTRIBUTING.md).

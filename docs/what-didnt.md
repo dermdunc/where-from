@@ -1,6 +1,6 @@
 # What didn't work
 
-Each of these was tested on specific tasks, with specific models, against a bar set in advance. None of this says graphs, RAG, bigger models, context engineering or task routing "don't work" in general. It says what happened here.
+These results come from the author's private repositories and can't be re-run from this repo. Each was tested on specific tasks, with specific models, against a bar set in advance. None of this says graphs, RAG, bigger models, context engineering or task routing "don't work" in general. It says what happened here.
 
 ### A machine-built repo map as context for a small model
 
@@ -24,7 +24,7 @@ Each of these was tested on specific tasks, with specific models, against a bar 
 
 ### A better machine packet to close the gap to curated context
 
-- **What happened:** the improved packet recovered about 13% of the gap. Its clearest gain was honesty: unsupported claims fell from 1.39 to 0.39 per task. It also scored at least as well as the previous map on 5 of 6 tasks.
+- **What happened:** the improved packet recovered about 13% of the gap. Its clearest gain was honesty: in E2, unsupported claims fell from 1.39 to 0.39 per task against the earlier map. (Different experiment from E3a's 0.727 vs 0.515 per run, where ranked packets were the least honest of three arms.) It also scored at least as well as the previous map on 5 of 6 tasks.
 
 ### Routing each task to its best context procedure
 

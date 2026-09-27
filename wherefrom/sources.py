@@ -22,7 +22,14 @@ class SourceError(Exception):
     """A source can't be read cleanly. Build refuses; checks report stale."""
 
 
+def inside(root: Path, path: Path) -> None:
+    """Records must live inside the sources root; a symlink out is refused."""
+    if path.exists() and root.resolve() not in path.resolve().parents:
+        raise SourceError(f"{path.relative_to(root)}: resolves outside the sources root")
+
+
 def catalog_records(root: Path) -> dict:
+    inside(root, root / "catalog.json")
     try:
         services = list(json.loads((root / "catalog.json").read_text())["services"])
     except (OSError, ValueError, KeyError, TypeError) as e:
@@ -74,6 +81,7 @@ def adr_records(root: Path) -> dict:
     records = {}
     for path in sorted((root / "adr").glob("*.md")):
         rel = str(path.relative_to(root))
+        inside(root, path)
         try:
             raw = path.read_bytes()
             header = parse_header(raw.decode("utf-8-sig"))

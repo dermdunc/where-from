@@ -5,8 +5,9 @@ fresh        the record's content and everything it cites hash the same as
 stale        the record or a cited file has changed since build (including a
              source that no longer reads cleanly)
 missing      the record or a cited file no longer exists
-unverifiable something cited can't be hashed (a URL, a path that is or now
-             resolves outside the sources); we say so rather than pretend
+unverifiable something cited couldn't be hashed at build (a URL, a path outside
+             the sources); we say so rather than pretend. A cite that later
+             resolves outside the sources is stale, never unverifiable.
 
 Freshness answers "has what we read changed?". It does not answer "is
 the claim true?", and it does not re-run the readers: a fresh fact can be
@@ -37,7 +38,7 @@ def cite_state(root: Path, c: dict) -> str:
         return "unverifiable"
     path = (root / c["target"]).resolve()
     if root.resolve() not in path.parents:
-        return "unverifiable"  # e.g. now a symlink pointing outside the sources
+        return "stale"  # was a file inside the sources, now resolves outside: it changed
     if not path.is_file():
         return "missing"
     if c["sha256"] is None:

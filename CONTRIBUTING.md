@@ -1,6 +1,6 @@
 # Contributing
 
-where-from is an exhibit that goes with a write-up, not a maintained tool. There's no roadmap, and the list of things it deliberately doesn't do (see the README) is part of the point.
+where-from is an exhibit that goes with a write-up (linked from the README once published; until then, [docs/what-didnt.md](docs/what-didnt.md) covers the reasoning), not a maintained tool. You need Python 3.11 or newer and a POSIX shell for the drift demo. There's no roadmap, and the list of things it deliberately doesn't do (see the README) is part of the point.
 
 ## One maintainer, irregular replies
 
@@ -8,10 +8,10 @@ This repo has one maintainer, working on it in spare time. Issues are read, but 
 
 ## What's useful
 
-- **A false `fresh`.** The one bug I will fix is a receipt reporting `fresh` when what it cites has changed. Please include the source files that reproduce it (the bug report template asks for the commands too).
+- **A false `fresh`.** The one bug I'll prioritise is a receipt reporting `fresh` when what it cites has changed. Please include the source files that reproduce it (the bug report template asks for the commands too).
 - **What happened when you tried the pattern.** If you try it on your own records, an issue saying what happened is worth more than code.
 
-New source types, storage backends, a query language, embeddings or a server will probably be declined. The write-up explains why.
+New source types, storage backends, a query language, embeddings or a server will probably be declined. [docs/what-didnt.md](docs/what-didnt.md) explains why.
 
 ## Pull requests
 

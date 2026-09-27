@@ -214,7 +214,29 @@ class ExhibitTest(unittest.TestCase):
         target.symlink_to(outside)
         _, checkout = self.about("checkout")
         adr1 = [f for f in checkout["facts"] if "ADR-0001" in f["value"]][0]
+        self.assertEqual(adr1["freshness"], "stale")
+        self.assertEqual(run("check", cwd=self.tmp).returncode, 1)  # can't slip past the gate
+
+    def test_changed_content_behind_outside_symlink_fails_check(self):
+        outside = self.tmp / "elsewhere.py"
+        outside.write_text("MAX_ATTEMPTS = 99\n")
+        target = self.src / "code/checkout/retry.py"
+        target.unlink()
+        target.symlink_to(outside)
+        self.assertEqual(run("check", cwd=self.tmp).returncode, 1)
+
+    def test_record_symlinked_outside_is_refused_and_never_fresh(self):
+        adr = self.src / "adr/0001-retry-card-payments.md"
+        outside = self.tmp / "adr-copy.md"
+        outside.write_bytes(adr.read_bytes())
+        adr.unlink()
+        adr.symlink_to(outside)
+        _, checkout = self.about("checkout")
+        adr1 = [f for f in checkout["facts"] if "ADR-0001" in f["value"]][0]
         self.assertNotEqual(adr1["freshness"], "fresh")
+        r = run("build", "--sources", str(self.src), cwd=self.tmp)
+        self.assertEqual(r.returncode, 2)
+        self.assertIn("resolves outside the sources root", r.stderr)
 
     def test_explain_shows_the_chain(self):
         _, ans = self.about("checkout")
