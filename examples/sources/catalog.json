@@ -1,0 +1,7 @@
+{
+  "services": [
+    {"name": "checkout", "owner": "payments-team", "tier": "1", "lifecycle": "production", "repo": "shop/checkout"},
+    {"name": "search", "owner": "discovery-team", "tier": "2", "lifecycle": "production", "repo": "shop/search"},
+    {"name": "recommendations", "owner": "discovery-team", "tier": "3", "lifecycle": "experimental", "repo": "shop/recs"}
+  ]
+}
