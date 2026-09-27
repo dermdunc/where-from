@@ -18,7 +18,7 @@ These results come from the author's private repositories and can't be re-run fr
 ### A bigger model as the fix
 
 - **Why we thought it would work:** maybe 7B was simply too small to use good context.
-- **What happened:** at 24B the same map cleared the bar (+0.20) on its own benchmark (with 20 of 54 runs lost to a harness bug, never re-run). On a rotated benchmark, with new tasks and a repaired harness, it lost to a plain alphabetical file listing by 0.336 on the main tier.
+- **What happened:** at 24B the same map cleared the bar (+0.20) on its own benchmark (with 20 of 54 runs lost to a harness bug; results left as recorded, not corrected). On a rotated benchmark, with new tasks and a repaired harness, it lost to a plain alphabetical file listing by 0.336 on the main tier.
 - **Why we stopped:** a gain that doesn't survive new tasks can't be credited to model size. Tasks and harness changed together, so task shape is the likeliest explanation, not a proven one.
 - **Reopen if:** a rotated benchmark where the gain survives.
 

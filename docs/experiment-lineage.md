@@ -13,7 +13,7 @@ E1b  better map, 3 replicates          +0.094                      below bar; re
       |  graph-ranking term added +0.012 -> dropped
       |  hand-curated context: +0.311
 E1c  same map at 24B                   +0.20 vs a plain listing    cleared the bar, on its own benchmark
-      |  (20 of its 54 runs lost to a harness bug; never re-run)
+      |  (20 of its 54 runs lost to a harness bug; results left as recorded)
 E2   new tasks, repaired harness, 24B  plain listing 0.726, maps 0.390 and 0.431
       |  machine map loses by 0.336    -> the E1c gain did not carry over
 E3a  oracle routing, 12 fresh tasks    +0.10 vs always-plain (below bar)
@@ -48,7 +48,7 @@ organic use, 30 days                          4 of 8 genuine queries            
 
 **Usable, and rebuilt in this repo:** joining records across sources with a receipt per fact; recomputing receipts at read time instead of trusting the last build; saying "unresolved" and "unsupported" out loud; a snapshot you can delete and rebuild. The day-one design (federated sources, a SQLite and full-text projection, a context compiler, a graph database held in reserve) came down to this.
 
-**Observations, true in the lab but not built into anything:** hand-curated context helped in all four cycles where it was tested (though on E2's main tier a plain listing edged it, 0.726 to 0.702; the curated packets were written by an expert agent). Exploration procedure can matter by task shape in at least one clean cell. Measuring the cheap baseline first decided more than any single result.
+**Observations, true in the lab but not built into anything:** hand-curated context helped in all four cycles where it was tested (though on E2's main tier a plain listing matched it inside the noise, 0.726 to 0.702; the curated packets were written by an expert agent). Exploration procedure can matter by task shape in at least one clean cell. Measuring the cheap baseline first decided more than any single result.
 
 **Derived engineering output:** a harness fix. One experiment lost 20 of 54 runs because the harness recorded the model's last tool call as its answer at the turn limit. The repaired harness produced clean answers in 78 runs and then got through a 99-run grid with no infrastructure failures. It hasn't been validated anywhere else, so it isn't published here.
 
