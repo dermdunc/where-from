@@ -27,20 +27,33 @@ python3 oracle.py                        # original grades
 python3 oracle.py independent_score_a
 python3 oracle.py independent_score_b
 python3 oracle.py --guess example-guess.csv
+python3 oracle.py --null                 # shuffled-label check (see below)
 ```
 
 Replace `example-guess.csv` with your own task-to-arm guesses to see how a hand-written routing
 table would have done against the oracle, and against random picks.
 
+## Is the hindsight lead more than noise?
+
+A best-of-three pick always looks better than any single arm, even when the arms are
+interchangeable. `--null` shuffles the arm labels at random within each task and replicate, many
+times, and recomputes the oracle's lead. If shuffled labels produce a lead as large as the real
+one, the real lead is not evidence that the arms differ by task. On these scores the shuffled
+median is about as large as the observed lead over always-plain. This is also why the gate requires
+beating *every* default, not just one: noise alone clears the bar against one default more often
+than against all of them.
+
 ## What the numbers support
 
 Under all three gradings the oracle beats always-plain by about +0.10 to +0.11, below the +0.15
-bar, and the verdict is INCONCLUSIVE by the rule fixed in advance. The rule's kill clause (do not
+bar. Against always-template it clears the bar narrowly under the original grades (+0.163) but not
+under either re-grade (+0.133, +0.131). The verdict is INCONCLUSIVE by the rule fixed in advance.
+The rule's kill clause (do not
 build if the oracle misses the bar against either default) applies under every grading, so the
 classifier was not built. The held-out oracle, which picks each task's arm from the other
 replicates, is the fairer stand-in for a real router and earns much less: roughly +0.00 to +0.05
-over always-plain. The pre-written routing guess matched the oracle on 2 or 3 of 9 tasks; random
-picks average 3.
+over always-plain. The pre-written routing guess matched the oracle on 2 or 3 of 9 tasks (ties broken
+plain, ranked, template; counting ties as matches adds one); random picks average 3.
 
 ## What it does not show
 
@@ -52,7 +65,8 @@ picks average 3.
 - A separate design audit found biases, most pushing toward a PASS that did not happen: the
   hindsight oracle's winner's-curse; a template arm given a short generic procedure while the
   other arms got a file map; ranked packets that contained some rubric facts verbatim; a plain
-  listing whose alphabetical cut-off favoured some tasks; and a nine-task mix chosen to suit
+  listing capped at about 20 files per repository, whose alphabetical cut-off favoured plain on the
+  tasks it happened to surface; and a nine-task mix chosen to suit
   routing.
 - On convention-audit tasks, a reviewer could identify the arm from the answer alone every time,
   so "blind to arm" did not hold there.

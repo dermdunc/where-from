@@ -4,6 +4,7 @@
     python3 oracle.py independent_score_a   # re-grade A (fresh Claude sessions)
     python3 oracle.py independent_score_b   # re-grade B (Codex, a different model family)
     python3 oracle.py original_score --guess guess.csv   # score your own routing guess
+    python3 oracle.py --null                # is the hindsight lead more than noise?
 
 guess.csv has two columns, task_id,arm (arm is plain, ranked or template).
 
@@ -13,6 +14,7 @@ pooled over the nine main tasks, at no more than 1.5x the cost. A template
 uplift inside [0.10, 0.20] without passing both is INCONCLUSIVE.
 """
 import csv
+import random
 import sys
 from statistics import mean
 
@@ -32,6 +34,15 @@ def cell(task, arm, key):
 score = {(t, a): cell(t, a, column) for t in main_tasks for a in ARMS}
 tokens = {(t, a): cell(t, a, "tokens") for t in main_tasks for a in ARMS}
 oracle = {t: max(ARMS, key=lambda a: score[(t, a)]) for t in main_tasks}
+
+
+def oracle_leads(runs):
+    """Hindsight oracle's pooled lead over always-plain and always-template, from
+    {(task, replicate, arm): score}. Scores rounded to 4 dp so exact ties stay exact."""
+    s = {(t, a): round(mean(v for (t2, _, a2), v in runs.items() if t2 == t and a2 == a), 4)
+         for t in main_tasks for a in ARMS}
+    best = mean(max(s[(t, a)] for a in ARMS) for t in main_tasks)
+    return tuple(best - mean(s[(t, a)] for t in main_tasks) for a in ("plain", "template"))
 
 pooled = {a: mean(score[(t, a)] for t in main_tasks) for a in ARMS}
 pooled_oracle = mean(score[(t, oracle[t])] for t in main_tasks)
@@ -82,3 +93,26 @@ if "--guess" in sys.argv:
     hits = sum(1 for t in main_tasks if guess.get(t) == oracle[t])
     print(f"\nyour routing guess matched the oracle on {hits}/{len(main_tasks)} tasks "
           f"(random picks among three arms average {len(main_tasks) / 3:.1f})")
+
+if "--null" in sys.argv:
+    # Shuffle arm labels within each task and replicate: if the arms were interchangeable,
+    # how big a hindsight lead would we see anyway?
+    runs = {(r["task_id"], r["replicate"], r["arm"]): round(float(r[column]), 4)
+            for r in rows if r["pooled"] == "yes"}
+    observed = oracle_leads(runs)
+    rng, n = random.Random(0), 2000
+    null = []
+    for _ in range(n):
+        shuffled = {}
+        for t, rep in {(t, rep) for t, rep, _ in runs}:
+            vals = [runs[(t, rep, a)] for a in ARMS]
+            rng.shuffle(vals)
+            shuffled.update({(t, rep, a): v for a, v in zip(ARMS, vals)})
+        null.append(oracle_leads(shuffled))
+    plain_null = sorted(x[0] for x in null)
+    print(f"\nshuffled-label null ({n} shuffles, seed 0):")
+    print(f"  observed lead vs always-plain {observed[0]:+.3f}; shuffled median "
+          f"{plain_null[n // 2]:+.3f}; shuffles at least as large: "
+          f"{sum(x >= observed[0] for x in plain_null) / n:.0%}")
+    print(f"  shuffles clearing +{BAR} vs always-plain: {sum(x[0] >= BAR for x in null) / n:.0%}; "
+          f"vs both defaults: {sum(min(x) >= BAR for x in null) / n:.0%}")

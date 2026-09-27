@@ -12,7 +12,9 @@ enough to justify building a classifier that tries to pick it in advance?
 
 **Arms.** One local model (24B coder model, via Ollama) answers every task three ways, each with
 the same file-reading tools:
-- `plain`: an unranked, alphabetical listing of the files in scope.
+- `plain`: an unranked, alphabetical listing of the files in scope, capped at about 20 files per
+  repository to fit the context window (the rest reachable through the list-directory tool). It
+  was not a complete listing.
 - `ranked`: a ranked packet of the files judged most relevant to the task, with extracted leads.
 - `template`: a generic step-by-step exploration procedure for the task's type, naming no files.
 
