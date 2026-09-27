@@ -3,17 +3,19 @@
 The companion write-up describes an experiment (E3a) that asked whether routing each task to its
 best context procedure was worth building a classifier for. This folder publishes the minimum
 needed to check that decision yourself: the per-run scores and a small calculator. It does not
-reproduce the experiment.
+reproduce the experiment. An *arm* is one context procedure: `plain`, `ranked` or `template`
+(defined in `preregistration.md`).
 
 ## What is here
 
 - `scores.csv`: one row per run (99 rows). Task label and type, whether it counts towards the
-  decision, replicate, arm, token count, and three independent scores for the same frozen answer:
-  - `original_score`: graded by the same agent session that ran the grid, arm labels hidden.
+  decision, replicate, arm, token count, and three scores for the same frozen answer:
+  - `original_score`: graded by the programme that ran the grid, arm labels hidden.
   - `independent_score_a`: re-graded later by fresh sessions of the same model family as the
     original grader, which saw only the task, the rubric and the answer.
   - `independent_score_b`: re-graded by a different model family under the same conditions.
-  - matching `*_unsupported` columns count false assertions each grader found.
+  - `original_unsupported`, `unsupported_a`, `unsupported_b`: unsupported claims (concrete false
+    assertions) each grader found. No human graded.
 - `oracle.py`: standard-library Python. Computes each fixed strategy's mean, the hindsight oracle,
   its uplift over the defaults, the registered bar and verdict, and a held-out oracle.
 - `preregistration.md`: what was fixed before the run, and what was added afterwards.
@@ -28,7 +30,12 @@ python3 oracle.py independent_score_a
 python3 oracle.py independent_score_b
 python3 oracle.py --guess example-guess.csv
 python3 oracle.py --null                 # shuffled-label check (see below)
+python3 oracle.py --bootstrap            # 90% interval from resampling replicates
 ```
+
+Run from anywhere; `--scores` points it at another file with the same columns. To use it on
+your own strategies, edit `ARMS` and `DEFAULTS` at the top of `oracle.py`; the pre-registration
+template below needs no edits.
 
 Replace `example-guess.csv` with your own task-to-arm guesses to see how a hand-written routing
 table would have done against the oracle, and against random picks.
@@ -53,10 +60,14 @@ build if the oracle misses the bar against either default) applies under every g
 classifier was not built. The held-out oracle, which picks each task's arm from the other
 replicates, is the fairer stand-in for a real router and earns much less: roughly +0.00 to +0.05
 over always-plain. The pre-written routing guess matched the oracle on 2 or 3 of 9 tasks (ties broken
-plain, ranked, template; counting ties as matches adds one); random picks average 3.
+plain, ranked, template; counting ties as matches, up to 4); random picks average 3.
+Resampling the three replicates per cell (`--bootstrap`) puts the 90% interval for the
+oracle's lead over always-plain at about +0.05 to +0.20 under every grading: either side of the
+bar, which is what inconclusive looks like.
 
 Unsupported claims (concrete false assertions, counted only where the rubric could adjudicate
-them) cut against the plain listing: under both independent re-grades it drew the most per run
+them) cut against the plain listing: under both independent re-grades it drew the most per run across all 99 runs (same order on the
+nine main tasks alone)
 (A: plain 0.82, ranked 0.73, template 0.45; B: 2.12, 1.61, 1.33). The original grading had put
 ranked highest; that finding did not survive. Absolute counts differ a lot between graders, so
 only the ordering is worth reading.

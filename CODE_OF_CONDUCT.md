@@ -1,6 +1,6 @@
 # Code of conduct
 
-Adapted (condensed and modified) from the [Contributor Covenant](https://www.contributor-covenant.org/), version 2.1, used under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). This file is under CC BY 4.0, not the repo's MIT licence.
+Adapted (condensed and modified) from the [Contributor Covenant](https://www.contributor-covenant.org/version/2/1/code_of_conduct/), version 2.1, used under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). This file is under CC BY 4.0, not the repo's MIT licence.
 
 **The short version.** Be kind, be specific, and argue with the evidence rather than the person. Everyone is welcome here, regardless of age, body size, disability, ethnicity, sex characteristics, gender identity and expression, level of experience, education, socio-economic status, nationality, personal appearance, race, religion, or sexual identity and orientation.
 

@@ -25,14 +25,15 @@ These results come from the author's private repositories and can't be re-run fr
 ### A better machine packet to close the gap to curated context
 
 - **What happened:** the improved packet recovered about 13% of the gap. Its clearest gain was honesty: in E2, unsupported claims fell from 1.39 to 0.39 per task against the earlier map. It also scored at least as well as the previous map on 5 of 6 tasks.
+- **Why we stopped:** on the rotated benchmark it still lost to the plain listing on the main tier (0.431 against 0.726).
 
 ### Routing each task to its best context procedure
 
 - **Why we thought it would work:** the curated advantage looked procedural (how to explore), not factual (what to read). Pick the right procedure per task shape and you get the advantage without an expert.
 - **What we tested:** an oracle that knew, after the fact, which of three procedures scored best on each of 12 fresh tasks (9 main, 3 controls). For choosing among those three on those tasks, it is an upper bound on any classifier.
-- **What happened:** +0.10 over always-plain, below the +0.15 bar. +0.16 over always-template, above it but inside the inconclusive band set in advance for that comparison. The procedure mapping chosen in advance matched the best arm on 2 of 9 tasks.
+- **What happened:** +0.10 over always-plain, below the +0.15 bar. +0.16 over always-template, above it but inside the inconclusive band set in advance for that comparison. The procedure mapping chosen in advance matched the best arm on 2 of 9 tasks (3 counting a tie).
 - **Why we stopped:** INCONCLUSIVE is the scientific answer. STOP is the engineering one: if perfect hindsight can't clearly clear the bar against the cheapest default, a classifier choosing among the same arms won't. The classifier was never written.
-- **Checked afterwards:** a re-grade by two graders independent of the original (one the same model family, one a different family; original rubrics; no repository access) gave the same verdict, and under both re-grades the lead over always-template fell below the bar too (+0.133, +0.131). Shuffling the arm labels at random produces a hindsight lead over always-plain of about the same size, so the pooled lead is within what noise alone gives. Under both re-grades the plain listing drew the most unsupported claims per run (counting only claims the rubric could adjudicate). The plain arm's listing was capped to fit the context window, not a complete listing, which favoured plain on the tasks its alphabetical cut-off surfaced; a held-out oracle (choosing each task's arm from other replicates), the fairer stand-in for a real router, earned roughly +0.00 to +0.05 over always-plain. [Numbers and calculator](../experiments/e3a-public/).
+- **Checked afterwards:** under an independent re-grade by two graders ([how](methodology.md)) the verdict held, and the lead over always-template fell below the bar too (+0.133, +0.131). Shuffled arm labels give a hindsight lead about as large as the real one; a held-out oracle, the fairer stand-in for a real router, earned roughly +0.00 to +0.05 over always-plain. Under both re-grades the plain listing drew the most unsupported claims per run. [Numbers, calculator and design audit](../experiments/e3a-public/).
 - **Reopen if:** a bigger replicate grid that moves a held-out oracle clearly above the bar, or real work repeatedly hitting the one task shape where ranking won.
 
 ### A general knowledge platform

@@ -64,7 +64,9 @@ Population:      <tasks>, <replicates per cell>, <which tasks are controls and e
 Bar:             oracle beats <each default> by >= <X> at <= <Y>x cost, pooled over <tasks>
 Inconclusive:    <band around the bar, and any data-quality trigger>
 Stop / build:    raw oracle below the bar against any default -> stop (not enough upside to pursue)
-Null check:      the same oracle on shuffled strategy labels; a raw lead no bigger than that is noise
+Null check:      the same oracle on shuffled strategy labels; treat the raw lead as signal only if it
+                 beats about 95% of shuffled leads
+Tie rule:        <order in which tied strategies are picked>
 Fund on:         the held-out gain (pick on some runs, score on others) against the same bar;
                  clearing the raw ceiling is necessary, not sufficient
 Written down on: <date, commit>, before any result exists
