@@ -63,6 +63,9 @@ Cheapest default: <the simplest thing that keeps everything visible>
 Population:      <tasks>, <replicates per cell>, <which tasks are controls and excluded>
 Bar:             oracle beats <each default> by >= <X> at <= <Y>x cost, pooled over <tasks>
 Inconclusive:    <band around the bar, and any data-quality trigger>
-Stop / build:    below the bar against any default -> do not build the selector
+Stop / build:    raw oracle below the bar against any default -> stop (not enough upside to pursue)
+Null check:      the same oracle on shuffled strategy labels; a raw lead no bigger than that is noise
+Fund on:         the held-out gain (pick on some runs, score on others) against the same bar;
+                 clearing the raw ceiling is necessary, not sufficient
 Written down on: <date, commit>, before any result exists
 ```
