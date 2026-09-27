@@ -32,7 +32,8 @@ These results come from the author's private repositories and can't be re-run fr
 - **What we tested:** an oracle that knew, after the fact, which of three procedures scored best on each of 12 fresh tasks (9 main, 3 controls). For choosing among those three on those tasks, it is an upper bound on any classifier.
 - **What happened:** +0.10 over always-plain, below the +0.15 bar. +0.16 over always-template, above it but inside the inconclusive band set in advance for that comparison. The procedure mapping chosen in advance matched the best arm on 2 of 9 tasks.
 - **Why we stopped:** INCONCLUSIVE is the scientific answer. STOP is the engineering one: if perfect hindsight can't clearly clear the bar against the cheapest default, a classifier choosing among the same arms won't. The classifier was never written.
-- **Reopen if:** a bigger replicate grid that moves the oracle clearly above the bar, or real work repeatedly hitting the one task shape where ranking won.
+- **Checked afterwards:** an independent re-grade by two graders gave the same verdict; a held-out oracle (choosing each task's arm from other replicates), the fairer stand-in for a real router, earned roughly +0.00 to +0.05 over always-plain. [Numbers and calculator](../experiments/e3a-public/).
+- **Reopen if:** a bigger replicate grid that moves a held-out oracle clearly above the bar, or real work repeatedly hitting the one task shape where ranking won.
 
 ### A general knowledge platform
 

@@ -10,7 +10,7 @@ How the private lab ran its experiments. You can't re-run them from here: the ta
 
 **Replicates.** E1b, E1c and E2 ran every task and condition three times with fixed seeds. E3a ran its nine main tasks three times and its three control tasks twice. E1 ran once per cell, and one of its headline figures did not replicate.
 
-**Grading.** Answers were graded against per-task fact lists. E1 was graded unblinded. In E1b, E1c and E2 the same agent session that ran the grid did the grading, with the arm labels hidden. E3a's answers were graded blind to arm. Nobody cross-checked graders against each other; that limitation stands.
+**Grading.** Answers were graded against per-task fact lists. E1 was graded unblinded. In E1b, E1c and E2 the same agent session that ran the grid did the grading, with the arm labels hidden. E3a's answers were graded with arm labels hidden, and later re-graded independently: fresh model sessions that saw only the task, the rubric and the answer, and a second model family under the same conditions. The decision held under every grading. Hiding labels did not hide the arm everywhere: on convention-audit tasks a reviewer could tell the arm from the answer alone every time. E1 to E2 were not re-graded.
 
 **Ablations.** When a map had several ingredients, the experiment removed them one at a time. That is how the graph-ranking term was found not to earn its place (+0.012).
 
