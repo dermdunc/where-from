@@ -10,8 +10,8 @@ reproduce the experiment.
 - `scores.csv`: one row per run (99 rows). Task label and type, whether it counts towards the
   decision, replicate, arm, token count, and three independent scores for the same frozen answer:
   - `original_score`: graded by the same agent session that ran the grid, arm labels hidden.
-  - `independent_score_a`: re-graded later by fresh model sessions that saw only the task, the
-    rubric and the answer.
+  - `independent_score_a`: re-graded later by fresh sessions of the same model family as the
+    original grader, which saw only the task, the rubric and the answer.
   - `independent_score_b`: re-graded by a different model family under the same conditions.
   - matching `*_unsupported` columns count false assertions each grader found.
 - `oracle.py`: standard-library Python. Computes each fixed strategy's mean, the hindsight oracle,
@@ -55,6 +55,12 @@ replicates, is the fairer stand-in for a real router and earns much less: roughl
 over always-plain. The pre-written routing guess matched the oracle on 2 or 3 of 9 tasks (ties broken
 plain, ranked, template; counting ties as matches adds one); random picks average 3.
 
+Unsupported claims (concrete false assertions, counted only where the rubric could adjudicate
+them) cut against the plain listing: under both independent re-grades it drew the most per run
+(A: plain 0.82, ranked 0.73, template 0.45; B: 2.12, 1.61, 1.33). The original grading had put
+ranked highest; that finding did not survive. Absolute counts differ a lot between graders, so
+only the ordering is worth reading.
+
 ## What it does not show
 
 - The tasks came from private repositories. Task subjects, prompts, model answers, packets and
@@ -77,7 +83,8 @@ plain, ranked, template; counting ties as matches adds one); random picks averag
 
 A methodology sketch, not a benchmark claim. Pick three "find every X across these repos"
 questions whose full answer you know. Run your agent on each three times with (1) an unranked
-listing of every file in scope, if it fits in context, and (2) your ranked context. Count missed
-items per answer, and note whether the same wrong answer repeats across runs. If a full listing
-doesn't fit, you need a different cheap baseline that still shows everything in scope, and
-nothing here tells you which one.
+listing that names everything in scope (the lab's was capped at about 20 files per repository,
+with a list-directory tool available to both arms), and (2) your ranked context. Count missed
+items per answer, and note whether the same wrong answer repeats across runs. The lab never
+tested a complete listing, or any listing at monorepo scale; nothing here tells you which cheap
+baseline to use there.

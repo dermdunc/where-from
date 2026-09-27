@@ -21,6 +21,9 @@ from statistics import mean
 ARMS = ["plain", "ranked", "template"]  # ties go to the first arm in this order
 BAR, BAND, MAX_COST = 0.15, 0.05, 1.5
 
+if {"-h", "--help"} & set(sys.argv):
+    sys.exit(__doc__)
+
 column = next((a for a in sys.argv[1:] if not a.startswith("--") and not a.endswith(".csv")),
               "original_score")
 rows = list(csv.DictReader(open("scores.csv")))

@@ -2,15 +2,15 @@
 
 How the private lab ran its experiments. You can't re-run them from here: the tasks were drawn from the author's own private repositories. This page exists so you can judge the numbers, and borrow the method.
 
-**Cheap baseline first.** Every expensive idea was measured against the simplest thing that could work (plain access to the repo, or an alphabetical file listing) before anything was built on top of it.
+**Cheap baseline first.** Every expensive idea was measured against the simplest thing that could work (plain access to the repo, or an unranked alphabetical file listing; in E2 and E3a that listing was capped at about 20 files per repository to fit a fixed budget, with a list-directory tool for the rest, so it was never a complete listing) before anything was built on top of it.
 
-**Bars set in advance.** Each experiment wrote down, before any run, what counted as a material effect (+0.15 on a 0 to 1 task score), what counted as noise (0.05), and what each outcome would mean. E3a also set an *inconclusive* band, [0.10, 0.20], on its main comparison, so a borderline result couldn't be rounded to whichever answer was more convenient.
+**Bars set in advance.** Each experiment wrote down, before any run, what counted as a material effect (+0.15 on a 0 to 1 task score), what counted as noise (0.05), and what each outcome would mean. E3a also set an *inconclusive* band, [0.10, 0.20], on its comparison against the template, so a borderline result couldn't be rounded to whichever answer was more convenient.
 
 **Benchmarks frozen, then rotated.** Tasks were committed before the models saw them. When a result looked good (E1c), the next experiment used fresh tasks and files. That rotation is where the result stopped holding.
 
 **Replicates.** E1b, E1c and E2 ran every task and condition three times with fixed seeds. E3a ran its nine main tasks three times and its three control tasks twice. E1 ran once per cell, and one of its headline figures did not replicate.
 
-**Grading.** Answers were graded against per-task fact lists. E1 was graded unblinded. In E1b, E1c and E2 the same agent session that ran the grid did the grading, with the arm labels hidden. E3a's answers were graded with arm labels hidden, and later re-graded independently: fresh model sessions that saw only the task, the rubric and the answer, and a second model family under the same conditions. The decision held under every grading. Hiding labels did not hide the arm everywhere: on convention-audit tasks a reviewer could tell the arm from the answer alone every time. E1 to E2 were not re-graded.
+**Grading.** Answers were graded against per-task fact lists. E1 was graded unblinded. In E1b, E1c and E2 the same agent session that ran the grid did the grading, with the arm labels hidden. E3a's answers were graded with arm labels hidden, and later re-graded independently: fresh sessions of the same model family as the original grader that saw only the task, the rubric and the answer, and a second model family under the same conditions. Both used the original rubrics, and neither could check cited paths against the repositories. No human graded. The decision held under every grading. Hiding labels did not hide the arm everywhere: on convention-audit tasks a reviewer could tell the arm from the answer alone every time. E1 to E2 were not re-graded.
 
 **Ablations.** When a map had several ingredients, the experiment removed them one at a time. That is how the graph-ranking term was found not to earn its place (+0.012).
 
