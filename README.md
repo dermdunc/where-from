@@ -1,3 +1,5 @@
+<p align="center"><img src="docs/assets/where-from-logo.png" alt="where-from logo: two sources joined into a receipt that is re-checked for freshness" width="320"></p>
+
 # where-from
 
 A small, runnable exhibit. It joins records from two sources that don't know about each other, keeps a receipt for every fact, and tells you when a receipt has gone stale. No model, no database, no service, no dependencies beyond Python 3.11 or newer.
