@@ -21,6 +21,19 @@ reproduce the experiment. An *arm* is one context procedure: `plain`, `ranked` o
 - `preregistration.md`: what was fixed before the run, and what was added afterwards.
 - `example-guess.csv`: the routing guess written down before the run, in the calculator's format.
 
+## scores.csv columns
+
+| Column | Type | Values | Meaning |
+|---|---|---|---|
+| `task_id` | text | `CS1`-`CS3`, `CA1`-`CA3`, `ND1`-`ND3`, `ML1`, `ML2`, `SY1` | Task label. Subjects are not published. |
+| `task_class` | text | `census-sweep`, `convention-audit`, `needle-discovery`, `mechanical-lookup`, `synthesis` | Task type. |
+| `pooled` | text | `yes`, `no (control)` | `yes`: one of the nine main tasks the decision pools over. Controls are diagnostic only. |
+| `replicate` | integer | 1-3 (1-2 for controls) | Repeat run of the same task and arm. |
+| `arm` | text | `plain`, `ranked`, `template` | Context procedure (see `preregistration.md`). |
+| `original_score`, `independent_score_a`, `independent_score_b` | decimal | 0 to 1 | Rubric score: found 1, partial 0.5, missed 0, divided by the number of expected facts. |
+| `original_unsupported`, `unsupported_a`, `unsupported_b` | integer | 0 or more | Unsupported claims that grader counted. Never netted against the score. |
+| `tokens` | integer | 0 or more | Prompt plus completion tokens over all model calls in the run. The cost the bar compares. |
+
 ## Run it
 
 ```text
