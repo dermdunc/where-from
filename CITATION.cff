@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "If you cite this repository, please use these details."
+title: "where-from"
+abstract: "A small, runnable exhibit of provenance-complete joins across two sources, with receipts that report when a fact has gone stale; plus per-run scores and a calculator for an oracle-gate experiment."
+type: software
+authors:
+  - name: "dermdunc"
+repository-code: "https://github.com/dermdunc/where-from"
+license: MIT

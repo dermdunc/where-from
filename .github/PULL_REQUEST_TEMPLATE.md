@@ -10,3 +10,4 @@
 - [ ] No new dependencies beyond the Python 3.11+ standard library
 - [ ] Doesn't add something the README lists under "What it deliberately doesn't do" (or explains why it should)
 - [ ] Example data is invented, not real records
+- [ ] If an AI assistant helped, this PR says so, and I can answer for every change in it

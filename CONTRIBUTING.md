@@ -24,4 +24,8 @@ python3 -m unittest discover -s tests   # no install, no dependencies
 
 Please open an issue first for anything larger than a bug fix, so neither of us wastes time on something that won't be merged.
 
+## Using an AI coding assistant
+
+That's fine, on three conditions. Say so in the PR. A human submits the PR and can answer for every line of it. And no assistant adds sign-off or certification lines on anyone's behalf. [AGENTS.md](AGENTS.md) has the short version of these rules for the assistant itself.
+
 By contributing you agree that your contribution is licensed under the MIT licence in [LICENSE](LICENSE). Conduct: see [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
