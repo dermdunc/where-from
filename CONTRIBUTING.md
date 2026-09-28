@@ -1,6 +1,6 @@
 # Contributing
 
-where-from is an exhibit that goes with a write-up (linked from the README once published; until then, [docs/what-didnt.md](docs/what-didnt.md) covers the reasoning), not a maintained tool. You need Python 3.11 or newer and a POSIX shell for the drift demo. There's no roadmap, and the list of things it deliberately doesn't do (see the README) is part of the point.
+where-from is an exhibit that goes with a [write-up](https://theagentictekton.com/writing/a-file-listing-outlasted-my-ideas) ([docs/what-didnt.md](docs/what-didnt.md) has the short version), not a maintained tool. You need Python 3.11 or newer and a POSIX shell for the drift demo. There's no roadmap, and the list of things it deliberately doesn't do (see the README) is part of the point.
 
 ## One maintainer, irregular replies
 

@@ -4,7 +4,7 @@
 
 A small, runnable exhibit. It joins records from two sources that don't know about each other, keeps a receipt for every fact, and tells you when a receipt has gone stale. No model, no database, no service, no dependencies beyond Python 3.11 or newer.
 
-It is a clean-room rebuild, on invented data, of the one pattern that held up, narrowly, in a larger private experiment. The plan there was a federated knowledge layer plus a context compiler for small local models. The evidence cut it down to this. A companion write-up tells the whole story (linked here once published); [`docs/`](docs/) has the short version, including what didn't work.
+It is a clean-room rebuild, on invented data, of the one pattern that held up, narrowly, in a larger private experiment. The plan there was a federated knowledge layer plus a context compiler for small local models. The evidence cut it down to this. A [companion write-up](https://theagentictekton.com/writing/a-file-listing-outlasted-my-ideas) tells the whole story; [`docs/`](docs/) has the short version, including what didn't work.
 
 **This is an exhibit, not a maintained tool.** In the lab it came from, the pattern clearly helped with one of three real cross-source investigations, partly helped with another, and couldn't answer the third: an overall verdict of partial. I'd set a bar of 8 genuine uses in 30 days before treating it as a real tool; as of 27 September 2026 it had 4 against that bar of 8, all from one working session. Read it, run it, borrow the idea. Don't adopt it as infrastructure.
 
