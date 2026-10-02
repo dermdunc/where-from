@@ -89,6 +89,10 @@ The private lab asked two separate questions under the same rule: measure the ch
 
 The numbers come from the author's private repositories and can't be re-run from here. This repo reproduces the federation *behaviour*, not the experiments. Details: [experiment-lineage.md](docs/experiment-lineage.md), [what-didnt.md](docs/what-didnt.md), [methodology.md](docs/methodology.md). The oracle result's per-run scores, an independent re-grade and a small calculator are in [experiments/e3a-public](experiments/e3a-public/).
 
+## Citing it
+
+Archived on Zenodo: [doi:10.5281/zenodo.23109671](https://doi.org/10.5281/zenodo.23109671), which always resolves to the latest release (v0.1.0 is [10.5281/zenodo.23109672](https://doi.org/10.5281/zenodo.23109672)). GitHub's "Cite this repository" button reads [CITATION.cff](CITATION.cff).
+
 ## Licence
 
 MIT, see [LICENSE](LICENSE), except `CODE_OF_CONDUCT.md` (CC BY 4.0, adapted from the Contributor Covenant). Found a receipt that says `fresh` when it shouldn't? See [CONTRIBUTING.md](CONTRIBUTING.md).
